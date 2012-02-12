@@ -14,15 +14,5 @@
 	#
 	
 	$request = getAccessToken();
-	
-	function getAccessToken() {
-		$url    = 'http://www.flickr.com/services/oauth/access_token';
-		$params = formatParams(array(
-			'oauth_token'    => $_GET['oauth_token'],
-			'oauth_verifier' => $_GET['oauth_verifier']
-		));
-		
-		return request($url, $params, 'oauth');
-	}
 
 ?>

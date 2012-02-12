@@ -7,13 +7,7 @@
 		$token        = $_COOKIE['oauth_token'];
 		$token_secret = $_COOKIE['oauth_token_secret'];
 		
-		$params = formatParams(array(
-			'method' => 'flickr.contacts.getList'
-		));
-
-		$data = request($flickr_endpoint, $params, 'json');
-		
-		var_dump($data);
+		$contacts = getContactList();
 	}
 	else {
 		$request = getRequestToken();
@@ -29,19 +23,31 @@
 		var_export($request);
 		$nextStep = "http://www.flickr.com/services/oauth/authorize?perms=read&oauth_token={$request['oauth_token']}";
 		// header("Location: http://www.flickr.com/services/oauth/authorize?perms=read&oauth_token={$request['oauth_token']}");
-
-		function getRequestToken() {
-			global $domain;
-
-			$url    = 'http://www.flickr.com/services/oauth/request_token';
-			$params = formatParams(array(
-				'oauth_callback' => "{$domain}/oauth/process.php"
-			));
-
-			return request($url, $params, 'oauth');
-		}
 	}
 
 ?>
 
+<?php if ($nextStep): ?>
 <a href='<?php echo $nextStep; ?>'>Go west, young man</a>
+<?php endif ?>
+
+<?php if ($contacts): ?>
+<ol>
+<?php foreach ($contacts['contacts']['contact'] as $i => $c): ?>
+	<li>
+		<?php if ($c['realname']): ?>
+		<h2><?php echo $c['realname'] ?> (<?php echo $c['username'] ?>)</h2>
+		<?php else: ?>
+		<h2><?php echo $c['username'] ?></h2>
+		<?php endif ?>
+		
+		<?php if ($c['iconserver']): ?>
+		<img src='http://farm<?php echo $c['iconfarm'] ?>.staticflickr.com/<?php echo $c['iconserver'] ?>/buddyicons/<?php echo $c['nsid'] ?>.jpg'>
+		<?php else: ?>
+		<img src='http://www.flickr.com/images/buddyicon.jpg'>
+		<?php endif ?>
+	</li>
+<?php endforeach ?>
+</ol>
+<pre><?php var_dump($contacts) ?></pre>
+<?php endif ?>
