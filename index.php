@@ -59,7 +59,7 @@
 	}
 	
 	function getRequestToken() {
-		global $domain, $app_key, $oauth_version, $oauth_sig_method, $signature_key;
+		global $domain;
 		
 		$callback_url = "{$domain}/oauth/test.php";
 		
