@@ -2,6 +2,9 @@
 
 	require('config.inc');
 	
+	$oauth_token = getRequestToken();
+	header("Location: http://www.flickr.com/services/oauth/authorize?perms=read&oauth_token={$oauth_token}");
+	
 	function getRequestToken() {
 		global $domain;
 		
@@ -17,8 +20,6 @@
 		
 		return $resp_values['oauth_token'];
 	}
-	
-	echo getRequestToken();
 	
 	###########################################################################
 	# Helpers
