@@ -17,12 +17,7 @@
 			$person['nsid'] = $c['nsid'];
 			
 			# Get name
-			if ($c['realname']) {
-				$person['displayname'] = "{$c['realname']} ({$c['username']})";
-			}
-			else {
-				$person['displayname'] = $c['username'];
-			}
+			$person['name'] = $c['username'];
 			
 			# Get photostream url
 			if ($c['path_alias']) {
