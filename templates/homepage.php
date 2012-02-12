@@ -1,3 +1,5 @@
+<?php include('head.php'); ?>
+
 <?php if (count($people)): ?>
 <ol>
 <?php foreach ($people as $i => $p): ?>
@@ -11,3 +13,5 @@
 <?php endforeach ?>
 </ol>
 <?php endif ?>
+
+<?php include('foot.php'); ?>
