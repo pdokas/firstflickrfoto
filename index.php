@@ -1,31 +1,6 @@
 <?php
 
-	###########################################################################
-	# Config
-	###########################################################################
-
-	$domain = 'http://jetless.org/projects/firstflickrfoto';
-
-	$app_key    = 'b44d57f6779c99a9e59180b18577a36c';
-	$app_secret = '3885aeb02d6286a2';
-	
-	$oauth_version    = '1.0';
-	$oauth_sig_method = 'HMAC-SHA1';
-	
-	$defaults = array(
-		'oauth_consumer_key'     => $app_key,
-		'oauth_nonce'            => '',
-		'oauth_signature_method' => $oauth_sig_method,
-		'oauth_timestamp'        => '',
-		'oauth_version'          => $oauth_version
-	);
-	
-	$token         = '';
-	$token_secret  = '';
-	
-	$user_name     = '';
-	$user_nsid     = '';
-	$user_fullname = '';
+	require('config.inc');
 	
 	function getRequestToken() {
 		global $domain;
@@ -49,10 +24,10 @@
 	# Helpers
 	###########################################################################
 	
-	function sign($method = 'GET', $url, $params) {
+	function sign($url, $params, $method = 'GET') {
 		global $app_secret, $token_secret;
 		
-		$key         = "{$app_secret}&{$token_secret}"
+		$key         = "{$app_secret}&{$token_secret}";
 		$base_string = $method . '&' . rawurlencode($url) . '&' . rawurlencode($params);
 		
 		return base64_encode(hash_hmac('sha1', $base_string, $key, TRUE));
