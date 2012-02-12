@@ -19,6 +19,6 @@
 	$token         = '';
 	$token_secret  = '';
 	
-	$flickr_endpoint = 'http://api.flickr.com/services/rest';
+	define(FLICKR_ENDPOINT, 'http://api.flickr.com/services/rest');
 
 ?>

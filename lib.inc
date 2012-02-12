@@ -1,13 +1,22 @@
 <?php
 
 	function getContactList() {
-		global $flickr_endpoint;
-		
-		$params = formatParams(array(
+		$params = array(
 			'method' => 'flickr.contacts.getList'
-		));
+		);
 
-		return request($flickr_endpoint, $params, 'json');
+		return request($params, 'json');
+	}
+	
+	function getPhotos($who, $page = 1) {
+		$params = array(
+			'method'   => 'flickr.people.getPhotos',
+			'user_id'  => $who,
+			'per_page' => 1,
+			'page'     => $page
+		);
+		
+		return request($params, 'json');
 	}
 	
 	#
@@ -18,21 +27,21 @@
 		global $domain;
 
 		$url    = 'http://www.flickr.com/services/oauth/request_token';
-		$params = formatParams(array(
+		$params = array(
 			'oauth_callback' => "{$domain}/oauth/process.php"
-		));
+		);
 
-		return request($url, $params, 'oauth');
+		return request($params, 'oauth', $url);
 	}
 	
 	function getAccessToken() {
 		$url    = 'http://www.flickr.com/services/oauth/access_token';
-		$params = formatParams(array(
+		$params = array(
 			'oauth_token'    => $_GET['oauth_token'],
 			'oauth_verifier' => $_GET['oauth_verifier']
-		));
+		);
 		
-		return request($url, $params, 'oauth');
+		return request($params, 'oauth', $url);
 	}
 	
 	
@@ -69,11 +78,12 @@
 		return $ret;
 	}
 	
-	function request($url, $params, $format) {
+	function request($params, $format, $url = FLICKR_ENDPOINT) {
 		$ret = '';
 		
-		$url  = $url . "?{$params}&oauth_signature=" . sign($url, $params);
-		$data = file_get_contents($url);
+		$params = formatParams($params);
+		$url    = $url . "?{$params}&oauth_signature=" . sign($url, $params);
+		$data   = file_get_contents($url);
 		
 		switch ($format) {
 			case 'json':
