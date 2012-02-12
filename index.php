@@ -7,11 +7,44 @@
 		$token        = $_COOKIE['oauth_token'];
 		$token_secret = $_COOKIE['oauth_token_secret'];
 		
-		// $contacts = getContactList();
-		$firstPage = getPhotos('me');
-		$lastPage  = getPhotos('me', $firstPage['photos']['pages']);
+		$people = array();
 		
-		var_dump($lastPage);
+		$contacts = getContactList();
+		
+		foreach ($contacts['contacts']['contact'] as $i => $c) {
+			$person = array();
+			
+			$person['nsid'] = $c['nsid'];
+			
+			# Get name
+			if ($c['realname']) {
+				$person['displayname'] = "{$c['realname']} ({$c['username']})";
+			}
+			else {
+				$person['displayname'] = {$c['username'];
+			}
+			
+			# Get photostream url
+			if ($c['path_alias']) {
+				$person['url'] = "http://flickr.com/photos/{$c['path_alias']}/";
+			}
+			else {
+				$person['url'] = "http://flickr.com/photos/{$c['nsid']}/";
+			}
+			
+			# Get buddyicon
+			if ($c['iconserver']) {
+				$person['buddyicon'] = "http://farm{$c['iconfarm']}.staticflickr.com/{$c['iconserver']}/buddyicons/{$c['nsid']}.jpg";
+			}
+			else {
+				$person['buddyicon'] = 'http://www.flickr.com/images/buddyicon.jpg';
+			}
+			
+			$firstPage = getPhotos('me');
+			$lastPage  = getPhotos('me', $firstPage['photos']['pages']);
+			
+			$people[] = $person;
+		}
 	}
 	else {
 		$request = getRequestToken();
@@ -31,26 +64,16 @@
 
 ?>
 
-<?php if ($contacts): ?>
+<pre><?php var_dump($lastPage) ?></pre>
+
+<?php if (count($people)): ?>
 <ol>
-<?php foreach ($contacts['contacts']['contact'] as $i => $c): ?>
+<?php foreach ($people as $i => $p): ?>
 	<li>
-		<?php if ($c['realname']): ?>
-		<h2><?php echo $c['realname'] ?> (<?php echo $c['username'] ?>)</h2>
-		<?php else: ?>
-		<h2><?php echo $c['username'] ?></h2>
-		<?php endif ?>
+		<h2><?php echo $p['displayname'] ?></h2>
 		
-		<?php if ($c['path_alias']): ?>
-		<a href='http://flickr.com/photos/<?php echo $c['path_alias'] ?>/'>
-		<?php else: ?>
-		<a href='http://flickr.com/photos/<?php echo $c['nsid'] ?>/'>
-		<?php endif ?>
-			<?php if ($c['iconserver']): ?>
-			<img src='http://farm<?php echo $c['iconfarm'] ?>.staticflickr.com/<?php echo $c['iconserver'] ?>/buddyicons/<?php echo $c['nsid'] ?>.jpg'>
-			<?php else: ?>
-			<img src='http://www.flickr.com/images/buddyicon.jpg'>
-			<?php endif ?>
+		<a href='<?php echo $p['url'] ?>'>
+			<img src='<?php echo $p['buddyicon'] ?>'>
 		</a>
 	</li>
 <?php endforeach ?>
