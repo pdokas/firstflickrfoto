@@ -1,5 +1,25 @@
-.person > * {
+h1 {
+	font-size: 54px;
+	font-weight: 200;
+	line-height: 1em;
+	margin: 0.5em 0;
+}
+
+.person {
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
 }
+
+	.photo > img {
+		max-width: 100%;
+	}
+
+	.nametag h6 {
+		display: inline;
+	}
+
+	.nametag img {
+		height: 24px;
+		width: 24px;
+	}
