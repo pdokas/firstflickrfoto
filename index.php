@@ -30,8 +30,10 @@
 	function sign($method, $url, $params) {
 		global $app_secret, $token_secret;
 		
+		$key         = "{$app_secret}&{$token_secret}"
 		$base_string = $method . '&' . rawurlencode($url) . '&' . rawurlencode($params);
-		return base64_encode(hash_hmac('sha1', $base_string, "{$app_secret}&{$token_secret}", TRUE));
+		
+		return base64_encode(hash_hmac('sha1', $base_string, $key, TRUE));
 	}
 	
 	function formatParams($params = array()) {
