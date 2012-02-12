@@ -7,7 +7,11 @@
 		$token        = $_COOKIE['oauth_token'];
 		$token_secret = $_COOKIE['oauth_token_secret'];
 		
-		$contacts = getContactList();
+		// $contacts = getContactList();
+		$firstPage = getPhotos('me');
+		$lastPage  = getPhotos('me', $firstPage['photos']['pages']);
+		
+		var_dump($lastPage);
 	}
 	else {
 		$request = getRequestToken();
@@ -27,10 +31,6 @@
 
 ?>
 
-<?php if ($nextStep): ?>
-<a href='<?php echo $nextStep; ?>'>Go west, young man</a>
-<?php endif ?>
-
 <?php if ($contacts): ?>
 <ol>
 <?php foreach ($contacts['contacts']['contact'] as $i => $c): ?>
@@ -41,13 +41,22 @@
 		<h2><?php echo $c['username'] ?></h2>
 		<?php endif ?>
 		
-		<?php if ($c['iconserver']): ?>
-		<img src='http://farm<?php echo $c['iconfarm'] ?>.staticflickr.com/<?php echo $c['iconserver'] ?>/buddyicons/<?php echo $c['nsid'] ?>.jpg'>
+		<?php if ($c['path_alias']): ?>
+		<a href='http://flickr.com/photos/<?php echo $c['path_alias'] ?>/'>
 		<?php else: ?>
-		<img src='http://www.flickr.com/images/buddyicon.jpg'>
+		<a href='http://flickr.com/photos/<?php echo $c['nsid'] ?>/'>
 		<?php endif ?>
+			<?php if ($c['iconserver']): ?>
+			<img src='http://farm<?php echo $c['iconfarm'] ?>.staticflickr.com/<?php echo $c['iconserver'] ?>/buddyicons/<?php echo $c['nsid'] ?>.jpg'>
+			<?php else: ?>
+			<img src='http://www.flickr.com/images/buddyicon.jpg'>
+			<?php endif ?>
+		</a>
 	</li>
 <?php endforeach ?>
 </ol>
-<pre><?php var_dump($contacts) ?></pre>
+<?php endif ?>
+
+<?php if ($nextStep): ?>
+<a href='<?php echo $nextStep; ?>'>Go west, young man</a>
 <?php endif ?>
