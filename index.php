@@ -66,7 +66,7 @@
 			'oauth_callback' => "{$domain}/oauth/process.php"
 		));
 		
-		$signature = sign($method, $url, $params);
+		$signature = sign($url, $params);
 
 		$request_url = $url . "?{$params}&oauth_signature=" . urlencode($signature);
 		$resp_values = explodeResponse(file_get_contents($request_url));
