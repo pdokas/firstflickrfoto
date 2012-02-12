@@ -21,7 +21,7 @@
 				$person['displayname'] = "{$c['realname']} ({$c['username']})";
 			}
 			else {
-				$person['displayname'] = {$c['username'];
+				$person['displayname'] = $c['username'];
 			}
 			
 			# Get photostream url
@@ -40,11 +40,13 @@
 				$person['buddyicon'] = 'http://www.flickr.com/images/buddyicon.jpg';
 			}
 			
-			$firstPage = getPhotos('me');
-			$lastPage  = getPhotos('me', $firstPage['photos']['pages']);
+			// $firstPhoto = getPhoto('me');
+			// $lastPhoto  = getPhoto('me', $firstPhoto['photos']['pages']);
 			
 			$people[] = $person;
 		}
+		
+		include('templates/homepage.php');
 	}
 	else {
 		$request = getRequestToken();
@@ -60,26 +62,8 @@
 		var_export($request);
 		$nextStep = "http://www.flickr.com/services/oauth/authorize?perms=read&oauth_token={$request['oauth_token']}";
 		// header("Location: http://www.flickr.com/services/oauth/authorize?perms=read&oauth_token={$request['oauth_token']}");
+		
+		include('templates/signin.php');
 	}
 
 ?>
-
-<pre><?php var_dump($lastPage) ?></pre>
-
-<?php if (count($people)): ?>
-<ol>
-<?php foreach ($people as $i => $p): ?>
-	<li>
-		<h2><?php echo $p['displayname'] ?></h2>
-		
-		<a href='<?php echo $p['url'] ?>'>
-			<img src='<?php echo $p['buddyicon'] ?>'>
-		</a>
-	</li>
-<?php endforeach ?>
-</ol>
-<?php endif ?>
-
-<?php if ($nextStep): ?>
-<a href='<?php echo $nextStep; ?>'>Go west, young man</a>
-<?php endif ?>
