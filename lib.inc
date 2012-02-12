@@ -49,6 +49,26 @@
 	# Ye olde toolbelte
 	#
 	
+	function request($params, $format, $url = FLICKR_ENDPOINT) {
+		$ret = '';
+		
+		$params = formatParams($params);
+		$url    = $url . "?{$params}&oauth_signature=" . sign($url, $params);
+		$data   = file_get_contents($url);
+		
+		switch ($format) {
+			case 'json':
+				$ret = json_decode($data, TRUE);
+			break;
+			
+			case 'oauth':
+				$ret = explodeResponse($data);
+			break;
+		}
+		
+		return $ret;
+	}
+	
 	function formatParams($params = array()) {
 		global $defaults, $app_key, $token;
 		$ret = '';
@@ -73,26 +93,6 @@
 			
 			$ret .= "{$key}=" . rawurlencode($val);
 			$i++;
-		}
-		
-		return $ret;
-	}
-	
-	function request($params, $format, $url = FLICKR_ENDPOINT) {
-		$ret = '';
-		
-		$params = formatParams($params);
-		$url    = $url . "?{$params}&oauth_signature=" . sign($url, $params);
-		$data   = file_get_contents($url);
-		
-		switch ($format) {
-			case 'json':
-				$ret = json_decode($data, TRUE);
-			break;
-			
-			case 'oauth':
-				$ret = explodeResponse($data);
-			break;
 		}
 		
 		return $ret;
