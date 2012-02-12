@@ -18,9 +18,7 @@
 
 	$token         = '';
 	$token_secret  = '';
-
-	$user_name     = '';
-	$user_nsid     = '';
-	$user_fullname = '';
+	
+	$flickr_endpoint = 'http://api.flickr.com/services/rest';
 
 ?>
