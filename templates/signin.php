@@ -1,9 +1,8 @@
 <?php include('head.php'); ?>
 
 <?php if ($nextStep): ?>
-<div class='span12'>
+<?php var_export($request); ?><br>
 <a href='<?php echo $nextStep; ?>'>Go west, young man</a>
-</div>
 <?php endif ?>
 
 <?php include('foot.php'); ?>

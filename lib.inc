@@ -70,14 +70,14 @@
 	}
 	
 	function formatParams($params = array()) {
-		global $defaults, $app_key, $token;
+		global $defaults, $app_key, $oauth_token;
 		$ret = '';
 		
 		if ($params['method']) {
 			$params['api_key']        = $app_key;
 			$params['format']         = 'json';
 			$params['nojsoncallback'] = '1';
-			$params['oauth_token']    = $token;
+			$params['oauth_token']    = $oauth_token;
 		}
 		
 		# Always recalc these
@@ -99,9 +99,9 @@
 	}
 	
 	function sign($url, $params, $method = 'GET') {
-		global $app_secret, $token_secret;
+		global $app_secret, $oauth_token_secret;
 		
-		$key         = "{$app_secret}&{$token_secret}";
+		$key         = "{$app_secret}&{$oauth_token_secret}";
 		$base_string = $method . '&' . rawurlencode($url) . '&' . rawurlencode($params);
 		
 		return urlencode(base64_encode(hash_hmac('sha1', $base_string, $key, TRUE)));
