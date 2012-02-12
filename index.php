@@ -27,6 +27,28 @@
 	$user_nsid     = '';
 	$user_fullname = '';
 	
+	function getRequestToken() {
+		global $domain;
+		
+		$url    = 'http://www.flickr.com/services/oauth/request_token';
+		$params = formatParams(array(
+			'oauth_callback' => "{$domain}/oauth/process.php"
+		));
+		
+		$signature = sign($url, $params);
+
+		$request_url = $url . "?{$params}&oauth_signature=" . urlencode($signature);
+		$resp_values = explodeResponse(file_get_contents($request_url));
+		
+		return $resp_values['oauth_token'];
+	}
+	
+	echo getRequestToken();
+	
+	###########################################################################
+	# Helpers
+	###########################################################################
+	
 	function sign($method = 'GET', $url, $params) {
 		global $app_secret, $token_secret;
 		
@@ -57,28 +79,6 @@
 		
 		return $ret;
 	}
-	
-	function getRequestToken() {
-		global $domain;
-		
-		$url    = 'http://www.flickr.com/services/oauth/request_token';
-		$params = formatParams(array(
-			'oauth_callback' => "{$domain}/oauth/process.php"
-		));
-		
-		$signature = sign($url, $params);
-
-		$request_url = $url . "?{$params}&oauth_signature=" . urlencode($signature);
-		$resp_values = explodeResponse(file_get_contents($request_url));
-		
-		return $resp_values['oauth_token'];
-	}
-	
-	echo getRequestToken();
-	
-	###########################################################################
-	# Helpers
-	###########################################################################
 	
 	function explodeResponse($resp) {
 		$ret = array();
