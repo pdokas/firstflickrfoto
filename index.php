@@ -8,11 +8,7 @@
 		$token_secret = $_COOKIE['oauth_token_secret'];
 		
 		$params = formatParams(array(
-			'format'         => 'json',
-			'nojsoncallback' => '1',
-			'method'         => 'flickr.contacts.getList',
-			'api_key'        => $app_key,
-			'oauth_token'    => $token
+			'method' => 'flickr.contacts.getList'
 		));
 
 		$data = request($flickr_endpoint, $params, 'json');

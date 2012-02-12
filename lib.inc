@@ -10,8 +10,15 @@
 	}
 	
 	function formatParams($params = array()) {
-		global $defaults;
+		global $defaults, $app_key, $token;
 		$ret = '';
+		
+		if ($params['method']) {
+			$params['api_key']        = 'app_key';
+			$params['format']         = 'json';
+			$params['nojsoncallback'] = '1';
+			$params['oauth_token']    = $token;
+		}
 		
 		# Always recalc these
 		$params['oauth_timestamp'] = time();
