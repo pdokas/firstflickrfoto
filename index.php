@@ -27,7 +27,7 @@
 	$user_nsid     = '';
 	$user_fullname = '';
 	
-	function sign($method, $url, $params) {
+	function sign($method = 'GET', $url, $params) {
 		global $app_secret, $token_secret;
 		
 		$key         = "{$app_secret}&{$token_secret}"
@@ -61,12 +61,9 @@
 	function getRequestToken() {
 		global $domain;
 		
-		$callback_url = "{$domain}/oauth/test.php";
-		
-		$method = 'GET';
 		$url    = 'http://www.flickr.com/services/oauth/request_token';
 		$params = formatParams(array(
-			'oauth_callback' => $callback_url
+			'oauth_callback' => "{$domain}/oauth/process.php"
 		));
 		
 		$signature = sign($method, $url, $params);
@@ -100,20 +97,6 @@
 ?>
 
 <pre>
-universal:	
-	consumer_key
-	nonce
-	signature_method
-	timestamp
-	version
-	
-	signature <-- Complicated
-
-sometimes:
-	callback
-	verifier -- Only when trading in a request token for an access token
-	token -- Always once you have an access token
-
 http://www.flickr.com/services/oauth/request_token
 	?oauth_nonce=95613465
 	&oauth_timestamp=1305586162
