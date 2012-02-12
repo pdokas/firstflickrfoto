@@ -31,7 +31,7 @@
 		global $app_secret, $token_secret;
 		
 		$base_string = $method . '&' . rawurlencode($url) . '&' . rawurlencode($params);
-		return $signature = base64_encode(hash_hmac('sha1', $base_string, "{$app_secret}&{$token_secret}", TRUE));
+		return base64_encode(hash_hmac('sha1', $base_string, "{$app_secret}&{$token_secret}", TRUE));
 	}
 	
 	function formatParams($params = array()) {
