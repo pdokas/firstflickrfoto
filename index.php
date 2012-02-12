@@ -4,7 +4,20 @@
 	require('lib.inc');
 	
 	if ($_COOKIE['oauth_token']) {
+		$token        = $_COOKIE['oauth_token'];
+		$token_secret = $_COOKIE['oauth_token_secret'];
 		
+		$params = formatParams(array(
+			'format'         => 'json',
+			'nojsoncallback' => '1',
+			'method'         => 'flickr.contacts.getList',
+			'api_key'        => $app_key,
+			'oauth_token'    => $token
+		));
+
+		$data = request($flickr_endpoint, $params, 'json');
+		
+		var_dump($data);
 	}
 	else {
 		$request = getRequestToken();
@@ -29,12 +42,7 @@
 				'oauth_callback' => "{$domain}/oauth/process.php"
 			));
 
-			$signature = sign($url, $params);
-
-			$request_url = $url . "?{$params}&oauth_signature=" . urlencode($signature);
-			$resp_values = explodeResponse(file_get_contents($request_url));
-
-			return $resp_values;
+			return request($url, $params, 'oauth');
 		}
 	}
 

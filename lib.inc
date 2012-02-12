@@ -6,7 +6,7 @@
 		$key         = "{$app_secret}&{$token_secret}";
 		$base_string = $method . '&' . rawurlencode($url) . '&' . rawurlencode($params);
 		
-		return base64_encode(hash_hmac('sha1', $base_string, $key, TRUE));
+		return urlencode(base64_encode(hash_hmac('sha1', $base_string, $key, TRUE)));
 	}
 	
 	function formatParams($params = array()) {
@@ -26,6 +26,25 @@
 			
 			$ret .= "{$key}=" . rawurlencode($val);
 			$i++;
+		}
+		
+		return $ret;
+	}
+	
+	function request($url, $params, $format) {
+		$ret = '';
+		
+		$url  = $url . "?{$params}&oauth_signature=" . sign($url, $params);
+		$data = file_get_contents($url);
+		
+		switch ($format) {
+			case 'json':
+				$ret = json_decode($data);
+			break;
+			
+			case 'oauth':
+				$ret = explodeResponse($data);
+			break;
 		}
 		
 		return $ret;

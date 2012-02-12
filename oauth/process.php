@@ -22,12 +22,7 @@
 			'oauth_verifier' => $_GET['oauth_verifier']
 		));
 		
-		$signature = sign($url, $params);
-
-		$request_url = $url . "?{$params}&oauth_signature=" . urlencode($signature);
-		$resp_values = explodeResponse(file_get_contents($request_url));
-		
-		return $resp_values;
+		return request($url, $params, 'oauth');
 	}
 
 ?>
