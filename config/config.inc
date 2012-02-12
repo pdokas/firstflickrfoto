@@ -2,9 +2,6 @@
 
 	$domain = 'http://jetless.org/projects/firstflickrfoto';
 
-	$app_key    = 'b44d57f6779c99a9e59180b18577a36c';
-	$app_secret = '3885aeb02d6286a2';
-
 	$oauth_version    = '1.0';
 	$oauth_sig_method = 'HMAC-SHA1';
 
@@ -20,5 +17,7 @@
 	$token_secret  = '';
 	
 	define(FLICKR_ENDPOINT, 'http://api.flickr.com/services/rest');
+	
+	require('flickr_api_credentials.inc');
 
 ?>

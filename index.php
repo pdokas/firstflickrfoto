@@ -1,6 +1,6 @@
 <?php
 
-	require('config.inc');
+	require('config/config.inc');
 	require('lib.inc');
 	
 	if ($_COOKIE['oauth_token']) {

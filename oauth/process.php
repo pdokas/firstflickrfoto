@@ -1,6 +1,6 @@
 <?php
 
-	require('../config.inc');
+	require('../config/config.inc');
 	require('../lib.inc');
 	
 	$oauth_token    = $_GET['oauth_token'];
