@@ -1,13 +1,44 @@
 <?php
 
-	function sign($url, $params, $method = 'GET') {
-		global $app_secret, $token_secret;
+	function getContactList() {
+		global $flickr_endpoint;
 		
-		$key         = "{$app_secret}&{$token_secret}";
-		$base_string = $method . '&' . rawurlencode($url) . '&' . rawurlencode($params);
-		
-		return urlencode(base64_encode(hash_hmac('sha1', $base_string, $key, TRUE)));
+		$params = formatParams(array(
+			'method' => 'flickr.contacts.getList'
+		));
+
+		return request($flickr_endpoint, $params, 'json');
 	}
+	
+	#
+	# OAuth token getters
+	#
+	
+	function getRequestToken() {
+		global $domain;
+
+		$url    = 'http://www.flickr.com/services/oauth/request_token';
+		$params = formatParams(array(
+			'oauth_callback' => "{$domain}/oauth/process.php"
+		));
+
+		return request($url, $params, 'oauth');
+	}
+	
+	function getAccessToken() {
+		$url    = 'http://www.flickr.com/services/oauth/access_token';
+		$params = formatParams(array(
+			'oauth_token'    => $_GET['oauth_token'],
+			'oauth_verifier' => $_GET['oauth_verifier']
+		));
+		
+		return request($url, $params, 'oauth');
+	}
+	
+	
+	#
+	# Ye olde toolbelte
+	#
 	
 	function formatParams($params = array()) {
 		global $defaults, $app_key, $token;
@@ -46,7 +77,7 @@
 		
 		switch ($format) {
 			case 'json':
-				$ret = json_decode($data);
+				$ret = json_decode($data, TRUE);
 			break;
 			
 			case 'oauth':
@@ -55,6 +86,15 @@
 		}
 		
 		return $ret;
+	}
+	
+	function sign($url, $params, $method = 'GET') {
+		global $app_secret, $token_secret;
+		
+		$key         = "{$app_secret}&{$token_secret}";
+		$base_string = $method . '&' . rawurlencode($url) . '&' . rawurlencode($params);
+		
+		return urlencode(base64_encode(hash_hmac('sha1', $base_string, $key, TRUE)));
 	}
 	
 	function explodeResponse($resp) {
