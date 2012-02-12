@@ -8,7 +8,7 @@
 		return request($params, 'json');
 	}
 	
-	function getPhotos($who, $page = 1) {
+	function getPhoto($who, $page = 1) {
 		$params = array(
 			'method'   => 'flickr.people.getPhotos',
 			'user_id'  => $who,
