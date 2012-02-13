@@ -8,7 +8,7 @@
 <?php endif ?>
 	<div class='person span2'>
 		<div class='photo'>
-			<img src='http://farm<?php echo $lastPhoto['farm'] ?>.staticflickr.com/<?php echo $lastPhoto['server'] ?>/<?php echo $lastPhoto['id'] ?>_<?php echo $lastPhoto['secret'] ?>_m.jpg'>
+			<img src='http://farm<?php echo $p['first_photo']['farm'] ?>.staticflickr.com/<?php echo $p['first_photo']['server'] ?>/<?php echo $p['first_photo']['id'] ?>_<?php echo $p['first_photo']['secret'] ?>_m.jpg'>
 		</div>
 		<div class='nametag'>
 			<a href='<?php echo $p['url'] ?>'>

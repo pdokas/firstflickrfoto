@@ -10,8 +10,6 @@
 		$people = array();
 		
 		$contacts = getContactList();
-		
-		$theluckystiff = rand(0, count($contacts['contacts']['contact']) - 1);
 				
 		foreach ($contacts['contacts']['contact'] as $i => $c) {
 			$person = array();
@@ -37,11 +35,9 @@
 				$person['buddyicon'] = 'http://www.flickr.com/images/buddyicon.jpg';
 			}
 			
-			if ($i === $theluckystiff) {
-				$firstPhoto = getPhoto($c['nsid']);
-				$lastPhoto  = getPhoto($c['nsid'], $firstPhoto['photos']['pages']);
-				$lastPhoto  = $lastPhoto['photos']['photo'][0];
-			}
+			# Get first photo
+			$firstPhoto = getFirstPhoto($c['nsid']);
+			$person['first_photo'] = $firstPhoto['photos']['photo'][0];
 			
 			$people[] = $person;
 		}

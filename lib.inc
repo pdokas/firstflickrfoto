@@ -8,12 +8,12 @@
 		return request($params, 'json');
 	}
 	
-	function getPhoto($who, $page = 1) {
+	function getFirstPhoto($who) {
 		$params = array(
-			'method'   => 'flickr.people.getPhotos',
+			'method'   => 'flickr.photos.search',
 			'user_id'  => $who,
-			'per_page' => 1,
-			'page'     => $page
+			'sort'     => 'date-posted-asc',
+			'per_page' => 1
 		);
 		
 		return request($params, 'json');
