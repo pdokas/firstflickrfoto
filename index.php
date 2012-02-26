@@ -21,10 +21,10 @@
 			
 			# Get photostream url
 			if ($c['path_alias']) {
-				$person['url'] = "http://flickr.com/photos/{$c['path_alias']}/";
+				$person['url'] = "http://www.flickr.com/photos/{$c['path_alias']}/";
 			}
 			else {
-				$person['url'] = "http://flickr.com/photos/{$c['nsid']}/";
+				$person['url'] = "http://www.flickr.com/photos/{$c['nsid']}/";
 			}
 			
 			# Get buddyicon

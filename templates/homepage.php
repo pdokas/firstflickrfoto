@@ -6,9 +6,9 @@
 <?php if ($i % 6 === 0): ?>
 <div class='row'>
 <?php endif ?>
-	<div class='person span2'>
+	<div class='person span2' data-photo-url='<?php echo "{$p['url']}{$p['first_photo']['id']}/" ?>'>
 		<div class='photo'>
-			<img src='http://farm<?php echo $p['first_photo']['farm'] ?>.staticflickr.com/<?php echo $p['first_photo']['server'] ?>/<?php echo $p['first_photo']['id'] ?>_<?php echo $p['first_photo']['secret'] ?>_m.jpg'>
+			<img src='<?php echo "http://farm{$p['first_photo']['farm']}.staticflickr.com/{$p['first_photo']['server']}/{$p['first_photo']['id']}_{$p['first_photo']['secret']}_m.jpg" ?>'>
 		</div>
 		<div class='nametag'>
 			<a href='<?php echo $p['url'] ?>'>
