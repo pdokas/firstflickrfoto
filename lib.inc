@@ -1,5 +1,7 @@
 <?php
 
+	require('config/config.inc');
+
 	function getContactList() {
 		$params = array(
 			'method' => 'flickr.contacts.getList'
@@ -48,6 +50,15 @@
 	#
 	# Ye olde toolbelte
 	#
+	
+	function ensure_login() {
+		global $oauth_token, $oauth_token_secret;
+		
+		$oauth_token        = $_COOKIE['oauth_token'];
+		$oauth_token_secret = $_COOKIE['oauth_token_secret'];
+		
+		return (bool) $_COOKIE['oauth_token'];
+	}
 	
 	function request($params, $format, $url = FLICKR_ENDPOINT) {
 		$ret = '';

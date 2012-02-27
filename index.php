@@ -1,12 +1,8 @@
 <?php
 
-	require('config/config.inc');
 	require('lib.inc');
 	
-	if ($_COOKIE['oauth_token']) {
-		$oauth_token        = $_COOKIE['oauth_token'];
-		$oauth_token_secret = $_COOKIE['oauth_token_secret'];
-		
+	if (ensure_login()) {
 		$people = array();
 		
 		$contacts = getContactList();
