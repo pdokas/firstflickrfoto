@@ -31,10 +31,6 @@
 				$person['buddyicon'] = 'http://www.flickr.com/images/buddyicon.jpg';
 			}
 			
-			# Get first photo
-			$firstPhoto = getFirstPhoto($c['nsid']);
-			$person['first_photo'] = $firstPhoto['photos']['photo'][0];
-			
 			$people[] = $person;
 		}
 		
