@@ -42,8 +42,11 @@ h1 {
 	}
 		
 		.nametag h6.timestamp {
-/*			display: none;*/
+			opacity: 0;
 			font-weight: normal;
+			-moz-transition: opacity 0.5s ease-in-out;
+			-webkit-transition: opacity 0.5s ease-in-out;
+			transition: opacity 0.5s ease-in-out;
 		}
 
 	.nametag img {
@@ -54,4 +57,4 @@ h1 {
 		width: 24px;
 	}
 
-.visible { opacity: 1; }
+.visible { opacity: 1 !important; }
