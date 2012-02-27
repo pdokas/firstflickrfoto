@@ -11,6 +11,7 @@
 		<div class='nametag'>
 			<img src='<?php echo $p['buddyicon'] ?>'>
 			<h6><?php echo $p['name'] ?></h6>
+			<h6 class='timestamp'></h6>
 		</div>
 	</div>
 <?php if ($i % 6 === 5): ?>

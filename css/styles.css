@@ -28,19 +28,29 @@ h1 {
 		.photo.clickable { cursor: pointer; }
 	
 	.nametag {
-		padding: 7px 7px 2px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		height: 22px;
+		padding: 7px;
 	}
 
 	.nametag h6 {
 		color: #888;
-		display: inline;
+		line-height: 1em;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
+		
+		.nametag h6.timestamp {
+/*			display: none;*/
+			font-weight: normal;
+		}
 
 	.nametag img {
 		border-radius: 2px;
+		float: left;
 		height: 24px;
+		margin-right: 7px;
 		width: 24px;
 	}
+
+.visible { opacity: 1; }

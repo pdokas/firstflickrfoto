@@ -12,10 +12,12 @@
 	
 	function getFirstPhoto($who) {
 		$params = array(
-			'method'   => 'flickr.photos.search',
-			'user_id'  => $who,
-			'sort'     => 'date-posted-asc',
-			'per_page' => 1
+			'method'       => 'flickr.photos.search',
+			'user_id'      => $who,
+			'sort'         => 'date-posted-asc',
+			'per_page'     => 1,
+			'extras'       => 'date_upload',
+			'content_type' => 1
 		);
 		
 		return request($params, 'json');
